@@ -27,6 +27,7 @@ module IdentityCache
   include IdentityCache::CacheInvalidation
   include IdentityCache::ShouldUseCache
   include IdentityCache::ParentModelExpiration
+  autoload :MemCacheStoreCAS, 'identity_cache/mem_cache_store_cas'
 
   CACHED_NIL = :idc_cached_nil
   BATCH_SIZE = 1000

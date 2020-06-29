@@ -16,6 +16,7 @@ matrix:
 env:
   - DB=mysql2
   - DB=postgresql
+  - DB=mysql2 ADAPTER=memcached
 
 services:
   - memcache
