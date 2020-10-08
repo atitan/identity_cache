@@ -49,5 +49,16 @@ module IdentityCache
         end
       end
     end
+
+    # Memcache keys are binaries. So we need to force their encoding to binary
+    # before applying the regular expression to ensure we are escaping all
+    # characters properly.
+    def normalize_key(key, options)
+      key = super.dup
+      key = key.force_encoding(Encoding::ASCII_8BIT)
+      key = key.gsub(ESCAPE_KEY_CHARS) { |match| "%#{match.getbyte(0).to_s(16).upcase}" }
+      key = "#{key[0, 213]}:md5:#{ActiveSupport::Digest.hexdigest(key)}" if key.size > 250
+      key
+    end
   end
 end
